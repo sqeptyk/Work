@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work Homepage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+      background: transparent;
+      color: #eee;
+    }
+
+    /* Video Background */
+    #bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+.grid {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 1.5fr 2fr 2fr 1.5fr;
+  grid-template-rows: .5fr 3.65fr 2fr 0.10fr;
+  gap: 10px;
+  padding-top: 13px;
+}
+
+    .box {
+      background: transparent;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid #c4c4c4;
+      border-radius: 8px;
+    }
+
+    iframe, img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border: none;
+    }
+
+.schedule    { grid-area: 1 / 1 / 3 / 2; display: flex; flex-direction: column; }
+.search      { grid-area: 1 / 2 / 2 / 4; border: none; }
+.dogslider   { grid-area: 1 / 4 / 3 / 5; }
+.calculators { grid-area: 2 / 2 / 4 / 3; }  /* spans rows 2 and 3 */
+.scripts     { grid-area: 2 / 3 / 3 / 4; }
+.callinfo    { grid-area: 3 / 3 / 4 / 4; }  /* under Scripts */
+.trucklist   { grid-area: 3 / 1 / 4 / 2; }
+.clock       { grid-area: 3 / 4 / 4 / 5; }
+.footer      { grid-area: 4 / 1 / 5 / 5; background: transparent; text-align: center; margin-top: -10px; font-size: 0.9em; color: #111; border: none; }
+
+    .csv-container {
+      overflow-y: auto;
+      height: 100%;
+      background: transparent;
+      padding: 5px;
+      font-size: 0.85em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #eee;
+    }
+
+    th, td {
+      border: 1px solid #555;
+      padding: 4px;
+      text-align: left;
+    }
+
+    th {
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔁 Background Video -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="Assets/WaterLoop.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="grid">
+    <div class="box schedule">
+      <div class="csv-container" id="csvDisplay">Loading schedule...</div>
+    </div>
+
+    <div class="box search">
+      <iframe src="Assets/search.html"></iframe>
+    </div>
+
+    <div class="box dogslider">
+      <img src="Assets/dogSlides.webp" alt="Dog Slider">
+    </div>
+
+    <div class="box trucklist">
+      <img src="Assets/Trucks.webp" alt="Truck List">
+    </div>
+
+    <div class="box calculators">
+      <iframe src="Assets/calcs.html" title="Calculators and Converters"></iframe>
+    </div>
+
+    <div class="box scripts">
+      <img src="assets/scripts.webp" alt="Call Scripts">
+    </div>
+
+    <div class="box callinfo">
+      <img src="Assets/callForwarding.webp" alt="Call Forward Info">
+    </div>
+
+    <div class="box clock">
+      <iframe src="Assets/clock.html" title="Clock"></iframe>
+    </div>
+
+    <div class="box footer">
+      Service Titan: sqeptyk + Beachwood2025!!  &nbsp; &nbsp; | &nbsp; &nbsp; Outlook: mike@langenfelder.net + Beachwood2025!!
+    </div>
+  </div>
+
+  <script>
+    // Render CSV task list into table
+    fetch("Assets/schedule.csv")
+      .then(res => res.text())
+      .then(csv => {
+        const rows = csv.trim().split("\n").map(line => line.split(","));
+        const table = document.createElement("table");
+        rows.forEach((row, i) => {
+          const tr = document.createElement("tr");
+          row.forEach(cell => {
+            const cellEl = document.createElement(i === 0 ? "th" : "td");
+            cellEl.textContent = cell;
+            tr.appendChild(cellEl);
+          });
+          table.appendChild(tr);
+        });
+        const container = document.getElementById("csvDisplay");
+        container.innerHTML = "";
+        container.appendChild(table);
+      })
+      .catch(() => {
+        document.getElementById("csvDisplay").textContent = "Failed to load CSV.";
+      });
+  </script>
+</body>
+</html>
