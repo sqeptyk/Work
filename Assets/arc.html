@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspect Ratio Calculator</title>
+    <style>
+        body {
+            background-color: transparent;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .arc-calculator {
+            background-image: linear-gradient(140deg, #3B3E4C, #1E222F);
+            padding: 8px;
+            width: 275px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            position: absolute;
+            top: 0px;
+            left: 7px;
+    border: 2px double;
+    border-color:  #777 #FFF; /* Added border */
+    border-radius: 8px;
+            overflow: hidden; /* Prevent any overflow */
+        }
+
+        .arc-columns {
+            display: flex;
+            justify-content: space-between; /* Space out headers */
+            margin-bottom: 10px; /* Add spacing below the headers */
+            color: #bbb;
+            font-size: 1.7em;
+            text-align: center;
+            font-family: 'Exo 2', sans-serif;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px  1px 0 #000, 1px  1px 0 #000;
+        }
+
+        .arc-columns span {
+            width: 130px; /* Match the width of the input fields */
+        }
+
+        .arc-set {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 38px;
+        }
+
+        .arc-set input {
+            width: 100px;
+            padding: 10px;
+            background: transparent;
+            color: #ffffff;
+            color: #bbbbbb;
+            border: 2px double;
+            border-color: #777 #FFF; /* Added border */
+            border-radius: 10px;
+            font-family: 'Exo 2', sans-serif;
+            text-align: center;
+        }
+
+        .arc-controls {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center items */
+        }
+
+        .arc-controls input {
+            width: 250px;
+            padding: 10px;
+            background: transparent;
+            color: #bbbbbb;
+            border: 2px double;
+            border-color: #777 #FFF; /* Added border */
+            border-radius: 10px;
+            font-family: 'Exo 2', sans-serif;
+            text-align: center;
+            margin-bottom: 22px; /* Space between input and button */
+        }
+
+        .arc-controls button {
+            padding: 10px 15px;
+            color: #eee;
+            background-image: linear-gradient(140deg, #28a745, #34d058); /* Green gradient */
+            box-shadow: inset 3px 3px 3px #34d058,
+                        inset -3px -3px 10px #28a745,
+                        3px 3px 3px #1d1f25;
+            cursor: pointer;
+            width: 280px;
+            border-radius: 15px;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .arc-controls button:hover {
+            background-color: #34d058;
+        }
+
+        .arc-result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+
+        .arc-controls button:focus {
+            outline: 3px solid #34d058;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="arc-calculator">
+
+    <!-- Column headers -->
+    <div class="arc-columns">
+        <span>SET 1</span>
+        <span>SET 2</span>
+    </div>
+
+        <!-- Set for first aspect ratio input -->
+        <div class="arc-set">
+            <input type="number" id="arc-width1" placeholder="WIDTH 1" oninput="updateArcRatio()">
+            <input type="number" id="arc-width2" placeholder="WIDTH 2" oninput="updateArcHeightFromRatio()">
+        </div>
+        
+        <!-- Set for second aspect ratio input -->
+        <div class="arc-set">
+            <input type="number" id="arc-height1" placeholder="HEIGHT 1" oninput="updateArcRatio()">
+            <input type="number" id="arc-height2" placeholder="HEIGHT 2" oninput="updateArcWidthFromRatio()">
+        </div>
+        
+        <!-- Controls for displaying ratio and clear button -->
+        <div class="arc-controls">
+            <input type="text" id="arc-ratio" placeholder="RATIO" readonly>
+            <button onclick="clearArcFields()">CLEAR</button>
+        </div>
+        
+        <!-- Result display -->
+        <div class="arc-result" id="arc-result"></div>
+    </div>
+
+    <script>
+        function updateArcRatio() {
+            const arcWidth1 = parseInt(document.getElementById('arc-width1').value);
+            const arcHeight1 = parseInt(document.getElementById('arc-height1').value);
+
+            if (arcWidth1 && arcHeight1) {
+                const gcd = greatestCommonDivisor(arcWidth1, arcHeight1);
+                const ratioWidth = arcWidth1 / gcd;
+                const ratioHeight = arcHeight1 / gcd;
+                document.getElementById('arc-ratio').value = `${ratioWidth}:${ratioHeight}`;
+            } else {
+                document.getElementById('arc-ratio').value = ''; // Clear if any input is empty
+            }
+        }
+
+        function updateArcHeightFromRatio() {
+            const arcWidth1 = parseInt(document.getElementById('arc-width1').value);
+            const arcHeight1 = parseInt(document.getElementById('arc-height1').value);
+            const arcWidth2 = parseInt(document.getElementById('arc-width2').value);
+
+            if (arcWidth1 && arcHeight1 && arcWidth2) {
+                const ratio = arcWidth1 / arcHeight1;
+                const calculatedHeight = Math.round(arcWidth2 / ratio);
+                document.getElementById('arc-height2').value = calculatedHeight;
+            }
+        }
+
+        function updateArcWidthFromRatio() {
+            const arcWidth1 = parseInt(document.getElementById('arc-width1').value);
+            const arcHeight1 = parseInt(document.getElementById('arc-height1').value);
+            const arcHeight2 = parseInt(document.getElementById('arc-height2').value);
+
+            if (arcWidth1 && arcHeight1 && arcHeight2) {
+                const ratio = arcWidth1 / arcHeight1;
+                const calculatedWidth = Math.round(arcHeight2 * ratio);
+                document.getElementById('arc-width2').value = calculatedWidth;
+            }
+        }
+
+        function greatestCommonDivisor(a, b) {
+            while (b) {
+                [a, b] = [b, a % b];
+            }
+            return a;
+        }
+
+        function clearArcFields() {
+            document.getElementById('arc-width1').value = '';
+            document.getElementById('arc-height1').value = '';
+            document.getElementById('arc-width2').value = '';
+            document.getElementById('arc-height2').value = '';
+            document.getElementById('arc-ratio').value = ''; // Clear the ratio field
+            document.getElementById('arc-result').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

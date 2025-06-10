@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+	    background-color: transparent;
+            overflow: hidden;
+        }
+
+/* The sidenav */
+.sidenav {
+  height: 100%;
+  width: 150px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  overflow-x: hidden;
+  padding-top: 13px;
+}
+
+/* Page content */
+.main {
+  margin-left: 80px; /* Same as the width of the sidenav */
+}
+/* The navigation menu links */
+.sidenav a {
+  padding: 4px 4px 4px 4px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #EEE;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+    </style>
+</head>
+<body>
+<div id="mySidenav" class="sidenav">
+  <a href="calc.html" target="content-frame">BASIC</a>
+  <a href="arc.html" target="content-frame">RATIO</a>
+  <a href="units.html" target="content-frame">UNITS</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()">&nbsp;</span>
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main" class="main">
+  <iframe 
+    name="content-frame"
+    src="calc.html"
+    style="width: 100%; height: 100vh; border: none;">
+  </iframe>
+</div>
+<script>
+
+</script>
+</body>
+</html>

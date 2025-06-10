@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+<style>
+body {
+    background-color: transparent;
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Exo 2', sans-serif;
+    padding: 0;
+}
+.basic-calculator {
+    background-image: linear-gradient(140deg, #3B3E4C, #1E222F);
+    padding: 8px;
+    width: 275px; /* Made the calculator wider */
+    height: 400px;
+    position: absolute; /* Added positioning */
+    top: 0px; /* Adjusted vertical position */
+    left: 7px; /* Adjusted horizontal position */
+    border: 2px double;
+    border-color:  #777 #FFF; /* Added border */
+    border-radius: 8px;
+    overflow: hidden;
+}
+.basic-calculator .basic-screen {
+    height: 90px;
+    width: 270px; /* Made the screen width match the new calculator width */
+    color: #bbbbbb;
+    font-size: 30px;
+    text-align: right;
+    border: 2px double;
+    border-color:  #777 #FFF; /* Added border */
+    border-radius: 10px;
+    font-family: 'Exo 2', sans-serif;
+}
+.basic-calculator .basic-screen .basic-new {
+    color: #fff;
+    font-size: 50px;
+    font-family: 'Exo 2', sans-serif;
+}
+.basic-calculator .basic-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 58px); /* Increased button width */
+    grid-template-rows: repeat(5, 50px); /* Keep button height the same */
+    margin-top: 8px;
+    gap: 13px;
+}
+.basic-calculator .basic-buttons button {
+    border-radius: 15px;
+    border: none;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 31px;
+    color: #efefef;
+    background-image: linear-gradient(140deg, #3b424d, #5D697A);
+    box-shadow: inset 3px 3px 3px #5D697A,
+                inset -3px -3px 10px #5D697A,
+                3px 3px 3px #1d1f25;
+    		text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; /* Black stroke effect */
+}
+
+.basic-calculator .basic-buttons button:nth-child(17) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.basic-calculator .basic-buttons button:nth-child(-n+3) {
+    background-image: linear-gradient(140deg, #1e70b7, #4e8ecb); /* Blue gradient */
+    box-shadow: inset 3px 3px 3px #4e8ecb,
+                inset -3px -3px 10px #1e70b7,
+                3px 3px 3px #1d1f25;
+}
+.basic-calculator .basic-buttons button:nth-child(4n) {
+    background-image: linear-gradient(140deg, #BC5A17, #E09121);
+    box-shadow: inset 3px 3px 3px #E09121,
+                inset -3px -3px 10px #e99725,
+                3px 3px 3px #1d1f25;
+}
+
+.basic-calculator .basic-buttons button:nth-child(19) {
+    background-image: linear-gradient(140deg, #28a745, #34d058); /* Green gradient */
+    box-shadow: inset 3px 3px 3px #34d058,
+                inset -3px -3px 10px #28a745,
+                3px 3px 3px #1d1f25;
+}
+
+.basic-calculator .basic-buttons button:active {
+    box-shadow: none;
+}
+</style>
+
+</head>
+<body>
+    
+    <div class="basic-calculator">
+        <div class="basic-screen">
+            <div class="basic-last"></div>
+            <div class="basic-new"></div>
+        </div>
+        <div class="basic-buttons">
+
+            <button>C</button>
+            <button>±</button>
+            <button>%</button>
+            <button>÷</button>
+
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button>x</button>
+
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>-</button>
+
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>+</button>
+
+            <button>0</button>
+            <button>.</button>
+            <button>=</button>
+        </div>
+    </div>
+
+    <script>
+let basicListButtons = document.querySelectorAll('.basic-buttons button');
+let basicLastReturn = document.querySelector('.basic-screen .basic-last');
+let basicNewReturn = document.querySelector('.basic-screen .basic-new');  
+
+let basicFirstNumber = null;
+let basicNewNumber = null;
+let basicCalculator = '+';
+
+basicListButtons.forEach(button => {
+    button.addEventListener('click', ()=> {
+        let value = button.innerText;
+        switch (value) {
+            case ((value.match(/[0-9]/) || {}).input):
+                // add number in basicLastNumber
+                basicNewNumber = basicNewNumber !== null ? basicNewNumber + value : value;
+                break;
+            case '.':
+                basicNewNumber = basicNewNumber !== null ? basicNewNumber + value : '0.';
+                break;
+            case '±':
+                basicNewNumber = -1 * basicNewNumber;
+                break;
+            case '%':
+                basicNewNumber = 0.01 * basicNewNumber;
+                break;
+            case ((value.match(/[\+|\-|\x|\÷]/) || {}).input):
+                if(basicNewNumber){
+                    if(basicFirstNumber){
+                        applyBasicCalculator();
+                    }
+                    basicCalculator = value;
+                    basicFirstNumber = basicNewNumber;
+                    basicNewNumber = null;
+                }
+                break;    
+            case '=':
+                applyBasicCalculator();
+                basicFirstNumber = null;
+                break;  
+            case 'C':
+                basicFirstNumber = null;
+                basicNewNumber = null;
+                basicCalculator = '+';
+                break;      
+        }
+        reloadBasicScreen();
+    })
+})
+const applyBasicCalculator = () => {
+   switch (basicCalculator) {
+    case '+':
+        basicNewNumber = Number(basicFirstNumber) + Number(basicNewNumber);
+        break;
+    case '-':
+        basicNewNumber = Number(basicFirstNumber) - Number(basicNewNumber);
+        break;
+    case 'x':
+        basicNewNumber = Number(basicFirstNumber) * Number(basicNewNumber);
+        break;
+    case '÷':
+        basicNewNumber = (Number(basicFirstNumber) / Number(basicNewNumber)).toFixed(5);
+        break;
+   }
+}
+const reloadBasicScreen = () => {
+    basicLastReturn.innerText = basicFirstNumber !== null ? basicFirstNumber + '' + basicCalculator : '';
+    basicNewReturn.innerText = basicNewNumber !== null ? basicNewNumber : '';
+}
+</script>
+</body>
+</html>

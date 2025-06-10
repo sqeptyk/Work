@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 600;
+            color: #C4C4C4;
+            padding: 0;
+	    overflow: hidden;
+}
+
+.search-container {
+    display: flex;
+    justify-content: space-around; /* Adjust as necessary for your layout */
+    margin: 5px 0px;
+}
+
+.search-box {
+    display: flex; /* Use flex to align input and button */
+    border: 1px solid #C4C4C4; /* Border for the search box */
+    border-radius: 22px;
+    width: 410px;
+    height: 40px;
+    background-color: transparent; /* Background color for the box */
+    overflow: hidden; /* Ensures the input and button stay within the box */
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+}
+
+.search-logo {
+    width: 31px;  /* Set the logo size */
+    height: auto;
+    margin-left: 8px; /* Space between logo and input */
+    margin-right: 4px; /* Space between logo and input */
+    margin-top: 3px;
+}
+
+.search-box input {
+    border: none; /* Remove default border */
+    padding: 10px; /* Add padding */
+    width: 100%; /* Fill the container */
+    background-color: transparent;
+    color: #eee; /* Text color */
+    font-weight: 600; /* Semibold text */
+    font-size: 18px;
+    text-align: center;
+}
+
+.search-box input::placeholder {
+    text-align: center;  /* Centers the placeholder text */
+    font-size: 18px;  /* You can adjust this size as needed */
+    color: #C4C4C4;
+    font-family: 'Exo 2', sans-serif; /* Set your font */
+    font-weight: 600; /* Optional: specify weight */
+    text-shadow: -1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222, 1px 1px 0 #222;
+}
+
+.label {
+position: absolute;
+top: 7px;
+left: 83px;
+font-size: 20px;
+color: #C4C4C4;
+transition: all 0.8s ease-in-out;
+background: transparent;
+letter=spacing: 2px;
+}
+
+input:focus + .label,
+input:valid + .label {
+top: -10px;
+font-size: 25px;
+color: #C4C4C4;
+}
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <div class="search-box">
+            <a href="https://www.google.com"><img src="google.png" class="search-logo"></a>
+            <input type="text" id="google-web-input" required>
+	    <span class="label">SEARCH GOOGLE</span>
+        </div>
+        <div>
+            <a href="https://www.facebook.com/langenfeldermechanical"><img src="langenfelder.webp" style="width: 410px; height:45px; margin-top: -5px;"></a>
+        </div>
+    </div>
+  <script>
+
+  </script>
+</body>
+</html>
