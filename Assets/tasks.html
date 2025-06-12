@@ -29,6 +29,7 @@
       transform: scale(1.2);
     }
   </style>
+  
 </head>
 <body>
   <ul class="checklist">
@@ -37,5 +38,15 @@
     <li><input type="checkbox" id="task3"><label for="task3">Update job schedule</label></li>
     <li><input type="checkbox" id="task4"><label for="task4">Restock supplies</label></li>
   </ul>
+  
+  <script>
+  document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    const key = 'check_' + checkbox.id;
+    checkbox.checked = localStorage.getItem(key) === 'true';
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+    });
+  });
+</script>
 </body>
 </html>
