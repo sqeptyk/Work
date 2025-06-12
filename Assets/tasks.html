@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checklist</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0px;
+      font-family: sans-serif;
+      background: transparent;
+      color: #eee;
+    }
+
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checklist input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <ul class="checklist">
+    <li><input type="checkbox" id="task1"><label for="task1">Check server backups</label></li>
+    <li><input type="checkbox" id="task2"><label for="task2">Email daily report</label></li>
+    <li><input type="checkbox" id="task3"><label for="task3">Update job schedule</label></li>
+    <li><input type="checkbox" id="task4"><label for="task4">Restock supplies</label></li>
+  </ul>
+</body>
+</html>
