@@ -58,10 +58,11 @@
       border: none;
     }
 
-.tasks    { grid-area: 1 / 1 / 3 / 2; display: flex; flex-direction: column; }
+.tasks        { grid-area: 1 / 1 / 3 / 2; display: flex; flex-direction: column; }
 .search      { grid-area: 1 / 2 / 2 / 4; border: none; }
 .dogslider   { grid-area: 1 / 4 / 3 / 5; }
-.calculators { grid-area: 2 / 2 / 4 / 3; }  /* spans rows 2 and 3 */
+.calc-a       { grid-area: 2 / 2 / 3 / 3; /* Row 2 only, Column 2 */ }
+.calc-b       { grid-area: 3 / 2 / 4 / 3; /* Row 3 only, Column 2 */ }
 .scripts     { grid-area: 2 / 3 / 3 / 4; }
 .callinfo    { grid-area: 3 / 3 / 4 / 4; }  /* under Scripts */
 .trucklist   { grid-area: 3 / 1 / 4 / 2; }
@@ -93,8 +94,12 @@
       <img src="Assets/Trucks.webp" alt="Truck List">
     </div>
 
-    <div class="box calculators">
-      <iframe src="Assets/calcs.html" title="Calculators and Converters"></iframe>
+    <div class="box calc-a">
+      <iframe src="Assets/calcA.html" alt="Calculator A"></iframe>
+    </div>
+
+    <div class="box calc-b">
+      <iframe src="Assets/calcB.html" alt="Calculator B"></iframe>
     </div>
 
     <div class="box scripts">
